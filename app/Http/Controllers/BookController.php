@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreBook;
 
 class BookController extends Controller
 {
@@ -14,7 +15,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::paginate(15);
+
+        return view('books.index')->with('books', $books);
     }
 
     /**
@@ -24,18 +27,29 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreBook  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBook $request)
     {
-        //
+        $book = new Book();
+
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->publisher = $request->publisher;
+        $book->synopsys = $request->synopsys;
+        $book->date_published = $request->date_published;
+        $book->isbn13 = $request->isbn13;
+
+        $book->save();
+
+        return redirect()->route('books.index')->with('success', 'Book added');
     }
 
     /**
@@ -46,7 +60,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return view('books.show')->with('book', $book);
     }
 
     /**
@@ -57,19 +71,28 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('books.edit')->with('book', $book);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreBook  $request
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(StoreBook $request, Book $book)
     {
-        //
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->publisher = $request->publisher;
+        $book->synopsys = $request->synopsys;
+        $book->date_published = $request->date_published;
+        $book->isbn13 = $request->isbn13;
+
+        $book->save();
+
+        return redirect()->route('books.show', $book->id)->with('success', 'Book Edited');
     }
 
     /**
