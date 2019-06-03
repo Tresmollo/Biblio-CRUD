@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Role');
     }
+
+    /**
+     * The books that belong to the user.
+     */
+    public function books()
+    {
+        return $this->belongsToMany('App\Book');
+    }
 }

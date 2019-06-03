@@ -17,8 +17,8 @@ class CreateBookUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('book_id');
             $table->unsignedInteger('user_id');
-            $table->date('date_out');
-            $table->date('date_in');
+            $table->dateTime('date_out');
+            $table->dateTime('date_in')->nullable();
             $table->timestamps();
         });
     }

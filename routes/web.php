@@ -20,5 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('books', 'BookController');
+Route::put('books/{book}/borrow', 'BookController@borrow')->name('books.borrow');
+Route::put('books/{book}/{userId}/return', 'BookController@return')->name('books.return');
 Route::resource('roles', 'RoleController');
 Route::resource('users', 'UserController');

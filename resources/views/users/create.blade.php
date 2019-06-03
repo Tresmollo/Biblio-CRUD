@@ -66,25 +66,25 @@
             </div>
 
             <div class="form-group row">
-                    <label for="role" class="col-md-1 col-form-label text-md-right">Role*</label>
+                <label for="role" class="col-md-1 col-form-label text-md-right">Role*</label>
 
-                    <div class="col-md-11">
-                        <select name="role" id="role" class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" required>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}"
-                                    @if ($role->id == old('role'))
-                                        selected
-                                    @endif>{{ $role->name }}</option>
-                            @endforeach
-                        </select>
+                <div class="col-md-11">
+                    <select name="role" id="role" class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" required>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}"
+                                @if ($role->id == old('role'))
+                                    selected
+                                @endif>{{ $role->name }}</option>
+                        @endforeach
+                    </select>
 
-                        @if ($errors->has('role'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('role') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+                    @if ($errors->has('role'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('role') }}</strong>
+                        </span>
+                    @endif
                 </div>
+            </div>
 
             <div class="form-group row mb-0">
                 <div class="col-md-2 offset-md-10 text-md-right">

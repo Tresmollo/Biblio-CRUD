@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBook;
+use Carbon\Carbon;
 
 class BookController extends Controller
 {
@@ -60,7 +61,11 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('books.show')->with('book', $book);
+        $users = \App\User::all();
+
+        $book::with('users');
+
+        return view('books.show')->with('book', $book)->with('users', $users);
     }
 
     /**
@@ -104,5 +109,48 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         //
+    }
+
+    /**
+     * Update the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Book  $book
+     * @return \Illuminate\Http\Response
+     */
+    public function borrow(Request $request, Book $book)
+    {
+        try {
+            if($book->inStock) {
+                $book->inStock = false;
+                $book->save();
+                $book->users()->attach($request->user, ['date_out' => Carbon::now()]);
+
+                return redirect()->route('books.show', $book->id)->with('success', 'Book Borrowed');
+            }
+        } catch (Exception $e) {
+            report($e);
+        }
+    }
+
+    /**
+     * Update the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function return(Book $book, $userId)
+    {
+        try {
+            if(!$book->inStock) {
+                $book->inStock = true;
+                $book->save();
+                $book->users()->updateExistingPivot($userId, ['date_in' => Carbon::now()]);
+
+                return redirect()->route('books.show', $book->id)->with('success', 'Book Returned');
+            }
+        } catch (Exception $e) {
+            report($e);
+        }
     }
 }

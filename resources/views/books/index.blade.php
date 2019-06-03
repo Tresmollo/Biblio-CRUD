@@ -17,6 +17,7 @@
                     <th>Publisher</th>
                     <th width="130">Publishing Date</th>
                     <th>ISBN</th>
+                    <th>In store</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,6 +30,7 @@
                         <td>{{ $book->publisher }}</td>
                         <td>{{ $book->date_published }}</td>
                         <td>{{ $book->isbn13 }}</td>
+                        <td>{{ ($book->inStock) ? 'yes' : 'no' }}</td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                 <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">View</a>

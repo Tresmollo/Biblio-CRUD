@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->string('publisher');
             $table->date('date_published');
             $table->string('isbn13');
+            $table->boolean('inStock')->default(true);
             $table->timestamps();
         });
     }
