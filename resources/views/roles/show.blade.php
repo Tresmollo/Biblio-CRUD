@@ -14,7 +14,9 @@
             <dt>Name</dt>
             <dd>{{ $role->name }}</dd>
         </dl>
-        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
+        @can('update', [auth()->user(), $role])
+            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">Edit</a>
+        @endcan
     </div>
 </div>
 @endsection

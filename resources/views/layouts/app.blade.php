@@ -36,12 +36,18 @@
                         <li class="nav-item">
                             <a href="{{ route('books.index') }}" class="nav-link">Books</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('roles.index') }}" class="nav-link">Roles</a>
-                        </li>
+                        @auth
+                            @can('view', [auth()->user(), User::class])
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index') }}" class="nav-link">Users</a>
+                                </li>
+                            @endcan
+                            @can('view', [auth()->user(), Role::class])
+                                <li class="nav-item">
+                                    <a href="{{ route('roles.index') }}" class="nav-link">Roles</a>
+                                </li>
+                            @endcan
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

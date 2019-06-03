@@ -32,8 +32,9 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                {{-- <a href="{{ route('users.show', $user->id) }}" class="btn btn-primary">View</a> --}}
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                                @can('update', [auth()->user(), $user])
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                                @endcan
                             </div>
                         </td>
                     </tr>

@@ -28,6 +28,8 @@ class BookController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Book::class);
+
         return view('books.create');
     }
 
@@ -39,6 +41,8 @@ class BookController extends Controller
      */
     public function store(StoreBook $request)
     {
+        $this->authorize('create', Book::class);
+
         $book = new Book();
 
         $book->title = $request->title;
@@ -76,6 +80,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
+        $this->authorize('update', [auth()->user(), Book::class]);
+
         return view('books.edit')->with('book', $book);
     }
 
@@ -88,6 +94,8 @@ class BookController extends Controller
      */
     public function update(StoreBook $request, Book $book)
     {
+        $this->authorize('update', Book::class);
+
         $book->title = $request->title;
         $book->author = $request->author;
         $book->publisher = $request->publisher;
@@ -108,7 +116,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $this->authorize('delete', Book::class);
     }
 
     /**
@@ -120,6 +128,8 @@ class BookController extends Controller
      */
     public function borrow(Request $request, Book $book)
     {
+        $this->authorize('update', [auth()->user(), Book::class]);
+
         try {
             if($book->inStock) {
                 $book->inStock = false;
@@ -141,6 +151,8 @@ class BookController extends Controller
      */
     public function return(Book $book, $userId)
     {
+        $this->authorize('update', [auth()->user(), Book::class]);
+
         try {
             if(!$book->inStock) {
                 $book->inStock = true;

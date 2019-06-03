@@ -15,6 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', [User::class, auth()->user()]);
+
         $users = User::with('roles')->get();
 
         return view('users.index')->with('users', $users);
@@ -27,6 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
+
         $roles = \App\Role::all();
         return view('users.create')->with('roles', $roles);
     }
@@ -39,6 +43,8 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
+        $this->authorize('create', User::class);
+
         $user = new User();
 
         $user->name = $request->name;
@@ -60,6 +66,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('view', User::class);
+
         $user = User::findOrFail($id);
         return view('users.show')->with('user', $user);
     }
@@ -72,6 +80,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', User::class);
+
         $user = User::with('roles')->findOrFail($id);
         $roles = \App\Role::all();
         return view('users.edit')->with('user', $user)->with('roles', $roles);
@@ -86,6 +96,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', User::class);
+
         $user = User::findOrFail($id);
 
         $user->name = $request->name;
@@ -106,6 +118,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', User::class);
+
         $user = User::findOrFail($id);
         $user->roles()->detach();
         $user->delete();
