@@ -3,7 +3,7 @@
 @section('content')
 <div class="row mb-2">
         <div class="col-md-12">
-            <a href="{{ route('roles.index') }}" class="btn btn-primary"><- Role list</a>
+            <a href="{{ route('roles.index') }}" class="btn btn-primary"><- Roles list</a>
         </div>
     </div>
 <div class="row justify-content-center">
