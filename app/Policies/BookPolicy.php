@@ -19,7 +19,7 @@ class BookPolicy
      */
     public function view(User $user, Book $book)
     {
-        return $user;
+        return $user->hasRole('Admin');
     }
 
     /**

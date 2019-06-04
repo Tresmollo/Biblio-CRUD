@@ -65,6 +65,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $this->authorize('view', [auth()->user(), Book::class]);
+
         $users = \App\User::all();
 
         $book::with('users');
