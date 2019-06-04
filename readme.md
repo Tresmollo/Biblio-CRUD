@@ -7,6 +7,5 @@ It's just like any other Laravel project. Basically here is how you use it for y
 - Run `composer install`
 - Save as the `.env.example` to `.env` and set your database information
 - Run `php artisan key:generate` to generate the app key
-- Run `npm install`
 - Run `php artisan db:seed` and chose yes to refresh/create the tables
 - Done !!!
