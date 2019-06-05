@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', [User::class, auth()->user()]);
+        $this->authorize('view', [auth()->user(), User::class]);
 
         $users = User::with('roles')->get();
 
@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', User::class);
+        $this->authorize('create', auth()->user());
 
         $roles = \App\Role::all();
         return view('users.create')->with('roles', $roles);
@@ -43,7 +43,7 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        $this->authorize('create', User::class);
+        $this->authorize('create', auth()->user());
 
         $user = new User();
 
@@ -66,7 +66,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('view', User::class);
+        $this->authorize('view', [auth()->user(), User::class]);
 
         $user = User::findOrFail($id);
         return view('users.show')->with('user', $user);
@@ -80,7 +80,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update', User::class);
+        $this->authorize('update', [auth()->user(), User::class]);
 
         $user = User::with('roles')->findOrFail($id);
         $roles = \App\Role::all();
@@ -96,7 +96,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('update', User::class);
+        $this->authorize('update', [auth()->user(), User::class]);
 
         $user = User::findOrFail($id);
 
@@ -118,7 +118,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete', User::class);
+        $this->authorize('delete', [auth()->user(), User::class]);
 
         $user = User::findOrFail($id);
         $user->roles()->detach();

@@ -96,7 +96,7 @@ class BookController extends Controller
      */
     public function update(StoreBook $request, Book $book)
     {
-        $this->authorize('update', Book::class);
+        $this->authorize('update', [auth()->user(), Book::class]);
 
         $book->title = $request->title;
         $book->author = $request->author;
